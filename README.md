@@ -1,70 +1,104 @@
-# Getting Started with Create React App
+# Frontend Setup and Installation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend for the Arithmetic Calculator API.
 
-## Available Scripts
+1. **Clone the Repository**
 
-In the project directory, you can run:
+    ```bash
+    git clone https://github.com/your-username/your-frontend-repo.git
+    cd your-frontend-repo
+    ```
 
-### `npm start`
+2. **Environment Variables**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    Create a `.env` file in the root directory of the frontend project with the following:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    ```bash
+    REACT_APP_BACKEND_URL=http://localhost:8080
+    ```
 
-### `npm test`
+    This points the frontend to the backend running locally. Update the URL if the backend is deployed to a cloud platform.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Install Dependencies**
 
-### `npm run build`
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Running the Frontend**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    To start the development server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ```bash
+    npm start
+    # or
+    yarn start
+    ```
 
-### `npm run eject`
+    The frontend will be running at `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. **Building for Production**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    To build the project for production:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ```bash
+    npm run build
+    # or
+    yarn build
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    This will create an optimized production build in the `build` folder.
 
-## Learn More
+6. **Docker Setup (Optional)**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    To run the frontend in Docker, create a `Dockerfile` and `docker-compose.yml`:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    **Dockerfile**
 
-### Code Splitting
+    ```dockerfile
+    FROM node:18
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    WORKDIR /app
+    COPY . .
 
-### Analyzing the Bundle Size
+    RUN npm install
+    RUN npm run build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    EXPOSE 3000
+    CMD ["npx", "serve", "-s", "build"]
+    ```
 
-### Making a Progressive Web App
+    **docker-compose.yml**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    ```yaml
+    version: "3"
+    services:
+      frontend:
+        build: .
+        ports:
+          - "3000:3000"
+        environment:
+          - REACT_APP_BACKEND_URL=http://your-backend-url
+    ```
 
-### Advanced Configuration
+    Run with Docker:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    ```bash
+    docker-compose up --build
+    ```
 
-### Deployment
+7. **Connecting to the Backend**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    Make sure that the `REACT_APP_BACKEND_URL` in your `.env` file matches the actual backend URL. If running both frontend and backend locally, the default would be `http://localhost:8080`.
 
-### `npm run build` fails to minify
+8. **Testing**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    Run the tests using:
+
+    ```bash
+    npm test
+    # or
+    yarn test
+    ```
