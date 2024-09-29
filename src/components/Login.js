@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post(process.env.REACT_APP_API_BASE_URL_TEST+'/api/v1/auth/login', 
+      const response = await axiosInstance.post(process.env.REACT_APP_API_BASE_URL+'/api/v1/auth/login', 
         { username, password }, 
         {
         headers: {
